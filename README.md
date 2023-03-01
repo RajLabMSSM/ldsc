@@ -14,3 +14,21 @@ To Run:
     - 'prefix': Prefix of your bed file (ex. for file "Microglia_promoters.bed", your prefix would be "Microglia_promoters")
     - 'gwas_inputfile': name for your file that contains paths to all of the LDSC annotations the pipeline will create. Needs to have ".ldcts" as the suffix (ex. if you are using Nott et al. annotations, then you can name your file "Nott.ldcts"
     - 'outfolder': outfolder for all of your results 
+
+2. Activate your snakemake conda environment. 
+
+```
+conda activate snakemake
+```
+
+3. Do a dry run to make sure you are obtaining the files that you are interested in (both your annotations + LD score files as well as the results for LDSC)
+
+```
+snakemake -s Snakefile --configfile config.yaml -npr
+```
+
+4. Start your run! Use snakejob_HPC convention. 
+
+```
+snakejob_HPC -s Snakefile 
+```
