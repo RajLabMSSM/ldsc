@@ -1,4 +1,4 @@
-# LDSC Pipeline! 
+# LDSC Pipeline
 
 This is the LD Score Regression (LDSC) Pipeline. LDSC quantifies the separate contributions of polygenic effects and various confounding factors, such as population stratification, based on GWAS summary statistics. 
 
