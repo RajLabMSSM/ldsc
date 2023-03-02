@@ -1,0 +1,39 @@
+GWAS:
+  - Farrell_PSP
+inFolder: 
+  - /sc/arion/projects/ad-omics/ashvin
+prefix:
+  # - hg19_decoy_GENCODE_SUPPA_SE_lead_snps_q0.05.bed    
+  # - hg19_decoy_union_SUPPA_RI_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_expression_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_transcript_lead_snps_q0.05.bed  
+  # - hg19_decoy_union_SUPPA_SE_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_leafcutter_lead_snps_q0.05.bed
+  # - hg19_decoy_union_expression_lead_snps_q0.05.bed
+  # - hg19_decoy_union_transcript_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_SUPPA_A3_lead_snps_q0.05.bed 
+  # - hg19_decoy_union_leafcutter_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_SUPPA_A5_lead_snps_q0.05.bed    
+  # - hg19_decoy_union_SUPPA_A3_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_SUPPA_AF_lead_snps_q0.05.bed    
+  # - hg19_decoy_union_SUPPA_A5_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_SUPPA_AL_lead_snps_q0.05.bed 
+  # - hg19_decoy_union_SUPPA_AF_lead_snps_q0.05.bed
+  # - hg19_decoy_GENCODE_SUPPA_RI_lead_snps_q0.05.bed
+  # - hg19_decoy_union_SUPPA_AL_lead_snps_q0.05.bed
+  - hg19_caQTL_lead_SNPs
+  #- new_cryptics.junctions_hg19.bed 
+  #- changing_sig.junctions_hg19.bed 
+  # - Microglia_promoters.bed
+  # - Astrocyte_promoters.bed
+  # - Astrocyte_enhancers.bed
+  # - Oligo_promoters.bed
+  # - Oligo_enhancers.bed
+  # - Neuronal_promoters.bed
+  # - Neuronal_enhancers.bed
+  - Microglia_enhancers 
+gwas_inputfile:
+  - test.ldcts
+outfolder: 
+  - caQTL_results
+
