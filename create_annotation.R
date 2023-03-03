@@ -4,7 +4,7 @@ suppressPackageStartupMessages(library(valr))
 suppressPackageStartupMessages(library(optparse))
 #!/usr/bin/env Rscript
 
-thousand_genome_annotations = read_tsv('/sc/arion/projects/ad-omics/ashvin/ldsc/1000G_Phase3_annotation_full.tsv.gz')
+thousand_genome_annotations = read_tsv('/sc/arion/projects/ad-omics/ashvin/ldsc_original/1000G_Phase3_annotation_full.tsv.gz')
 
 create_annotation <- function(data_file) {
   print("decoy")
