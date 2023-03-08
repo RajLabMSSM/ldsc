@@ -1,3 +1,20 @@
+if(! "GenomicRanges" %in% installed.packages()){
+   install.packages("GenomicRanges", dependencies = T)
+}
+
+if(! "valr" %in% installed.packages()){
+   install.packages("valr", dependencies = T)
+} 
+
+if(! "optparse" %in% installed.packages()){
+   install.packages("optparse", dependencies = T)
+}
+
+
+
+# library(valr)
+
+
 suppressPackageStartupMessages(library(readr))
 suppressPackageStartupMessages(library(GenomicRanges))
 suppressPackageStartupMessages(library(valr))

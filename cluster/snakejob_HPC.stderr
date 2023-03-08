@@ -1,0 +1,44 @@
+Job stats:
+job         count    min threads    max threads
+--------  -------  -------------  -------------
+all             1              1              1
+run_ldsc        1              1              1
+total           2              1              1
+
+<<Waiting for dispatch ...>>
+<<Starting on lc05e12>>
+<<Job is finished>>
+[Wed Mar  8 12:45:08 2023]
+Error in rule run_ldsc:
+    jobid: 1
+    output: results/Farrell_PSP.cell_type_results.txt
+    shell:
+        ml ldsc/1.0.0;python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out results/Farrell_PSP --ref-ld-chr-cts test.ldcts --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights.
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Error executing rule run_ldsc on cluster (jobid: 1, external: 18203, jobscript: /sc/arion/projects/ad-omics/ashvin/ldsc/.snakemake/tmp.99ay_0t7/snakejob.run_ldsc.1.sh). For error details see the cluster log and the log files of the involved rule(s).
+<<Waiting for dispatch ...>>
+<<Starting on lc03e04>>
+<<Job is finished>>
+[Wed Mar  8 12:45:48 2023]
+Error in rule run_ldsc:
+    jobid: 1
+    output: results/Farrell_PSP.cell_type_results.txt
+    shell:
+        ml ldsc/1.0.0;python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out results/Farrell_PSP --ref-ld-chr-cts test.ldcts --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights.
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Error executing rule run_ldsc on cluster (jobid: 1, external: 18403, jobscript: /sc/arion/projects/ad-omics/ashvin/ldsc/.snakemake/tmp.99ay_0t7/snakejob.run_ldsc.1.sh). For error details see the cluster log and the log files of the involved rule(s).
+<<Waiting for dispatch ...>>
+<<Starting on lc05e12>>
+<<Job is finished>>
+[Wed Mar  8 12:46:28 2023]
+Error in rule run_ldsc:
+    jobid: 1
+    output: results/Farrell_PSP.cell_type_results.txt
+    shell:
+        ml ldsc/1.0.0;python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out results/Farrell_PSP --ref-ld-chr-cts test.ldcts --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights.
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Error executing rule run_ldsc on cluster (jobid: 1, external: 18516, jobscript: /sc/arion/projects/ad-omics/ashvin/ldsc/.snakemake/tmp.99ay_0t7/snakejob.run_ldsc.1.sh). For error details see the cluster log and the log files of the involved rule(s).
+Exiting because a job execution failed. Look above for error message

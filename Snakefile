@@ -114,6 +114,7 @@ rule new_ldcts_file:
       joined_bar=lambda w, input: ",".join(annot_prefix),  # ', input' was added
    shell:
       # "echo ${params.annotprefix}"
+      "ml R/4.0.3;"
       "Rscript {params.script1} -i {params.annotprefix}/annotation_files/ -b {params.joined_bar} -o {params.ldctsprefix};"
    # run:
    #    def create_ldcts_file(bed_file_list):
@@ -184,4 +185,4 @@ rule run_ldsc:
       expand("results/{GWAS}.cell_type_results.txt", GWAS=gwas)
    shell:
       "ml ldsc/1.0.0;"
-      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts munged_ldsc_gwas/{gwas}_munged.sumstats.gz --ref-ld-chr 1000G_EUR_Phase3_baseline/baseline. --out results/{gwas} --ref-ld-chr-cts {ldcts_prefix} --w-ld-chr weights_hm3_no_hla/weights."
+      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts munged_ldsc_gwas/{gwas}_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out results/{gwas} --ref-ld-chr-cts {ldcts_prefix} --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights."
