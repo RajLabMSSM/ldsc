@@ -1,0 +1,61 @@
+Sender: LSF System <lsfadmin@lc05e10>
+Subject: Job 89817635: <ldsc:split_by_chr:annotprefix=Neuronal_promoters,chr_nums=7> in cluster <chimera> Done
+
+Job <ldsc:split_by_chr:annotprefix=Neuronal_promoters,chr_nums=7> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:10:10 2023
+Job was executed on host(s) <4*lc05e10>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:10:15 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:10:15 2023
+Terminated at Tue May 16 15:10:40 2023
+Results reported at Tue May 16 15:10:40 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "split_by_chr", "local": false, "input": ["psp_enrichment_results//Neuronal_promoters.annot"], "output": ["psp_enrichment_results//annotation_files/Neuronal_promoters.a.7.annot.gz"], "wildcards": {"annotprefix": "Neuronal_promoters", "chr_nums": "7"}, "params": {"outfolder": ["psp_enrichment_results/"]}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 127, "cluster": {"queue": "premium", "cores": 4, "mem": 3750, "time": "120", "name": "$(basename $(pwd)):split_by_chr:annotprefix=Neuronal_promoters,chr_nums=7", "output": "logs/split_by_chr:annotprefix=Neuronal_promoters,chr_nums=7.stdout", "error": "logs/split_by_chr:annotprefix=Neuronal_promoters,chr_nums=7.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake psp_enrichment_results//annotation_files/Neuronal_promoters.a.7.annot.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'psp_enrichment_results//Neuronal_promoters.annot' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules split_by_chr --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   16.87 sec.
+    Max Memory :                                 1339 MB
+    Average Memory :                             747.64 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               13661.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   25 sec.
+    Turnaround time :                            30 sec.
+
+The output (if any) follows:
+
+Namespace(annotation='psp_enrichment_results//Neuronal_promoters.annot', output='psp_enrichment_results//annotation_files/Neuronal_promoters', chrom='7')
+7
+         CHR     BP          SNP   CM  base  ANNOT
+8419585    7  16864  rs529954067  0.0     1      0
+8419586    7  20608  rs568080096  0.0     1      0
+8419587    7  24219  rs537649865  0.0     1      0
+8419588    7  27916  rs577290214  0.0     1      0
+8419589    7  30580  rs183052695  0.0     1      0
+
+
+PS:
+
+Read file <cluster/split_by_chr_annotprefix=Neuronal_promoters,chr_nums=7.stderr> for stderr output of this job.
+

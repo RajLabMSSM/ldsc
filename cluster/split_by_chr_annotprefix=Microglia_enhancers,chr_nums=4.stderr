@@ -1,0 +1,19 @@
+Building DAG of jobs...
+File path psp_enrichment_results//Microglia_enhancers.annot contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+File path psp_enrichment_results//annotation_files/Microglia_enhancers.a.4.annot.gz contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+[Tue May 16 15:10:13 2023]
+rule split_by_chr:
+    input: psp_enrichment_results//Microglia_enhancers.annot
+    output: psp_enrichment_results//annotation_files/Microglia_enhancers.a.4.annot.gz
+    jobid: 0
+    wildcards: annotprefix=Microglia_enhancers, chr_nums=4
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/tmp
+
+[Tue May 16 15:10:29 2023]
+Finished job 0.
+1 of 1 steps (100%) done

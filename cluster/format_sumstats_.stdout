@@ -1,0 +1,87 @@
+Sender: LSF System <lsfadmin@lc01g34>
+Subject: Job 89818383: <ldsc:format_sumstats:> in cluster <chimera> Done
+
+Job <ldsc:format_sumstats:> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:17:17 2023
+Job was executed on host(s) <4*lc01g34>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:17:20 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:17:20 2023
+Terminated at Tue May 16 15:19:33 2023
+Results reported at Tue May 16 15:19:33 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "format_sumstats", "local": false, "input": ["test.ldcts"], "output": ["formatted_ldsc_gwas/Farrell_PSP.sumstats.gz"], "wildcards": {}, "params": {}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 3, "cluster": {"queue": "premium", "cores": 4, "mem": 3750, "time": "120", "name": "$(basename $(pwd)):format_sumstats:", "output": "logs/format_sumstats:.stdout", "error": "logs/format_sumstats:.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake formatted_ldsc_gwas/Farrell_PSP.sumstats.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'test.ldcts' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules format_sumstats --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   127.33 sec.
+    Max Memory :                                 2848 MB
+    Average Memory :                             1184.31 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               12152.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                9
+    Run time :                                   132 sec.
+    Turnaround time :                            136 sec.
+
+The output (if any) follows:
+
+hello!
+['Farrell_PSP']
+/sc/arion/projects/ad-omics/data/references/GWAS/Farrell_PSP/processed/farrell_psp_full_stats_combined.tsv.gz
+20    True
+Name: full_effect, dtype: bool
+0          0.9593
+1          0.9601
+2          0.9532
+3          1.0505
+4          1.0491
+            ...  
+7230414    1.0034
+7230415    1.0033
+7230416    1.1143
+7230417    1.1097
+7230418    1.0928
+Name: OR, Length: 7230419, dtype: float64 0          0.0447
+1          0.0446
+2          0.0445
+3          0.0531
+4          0.0530
+            ...  
+7230414    0.0821
+7230415    0.0823
+7230416    0.0938
+7230417    0.0949
+7230418    0.0948
+Name: SE, Length: 7230419, dtype: float64
+           ID Allele1 Allele2  P.value  Z_score
+0   rs6694632       G       A   0.3527  -0.0407
+1  rs13303118       G       T   0.3611  -0.0399
+2   rs2341354       A       G   0.2817  -0.0468
+3   rs6665587       G       A   0.3542   0.0505
+4   rs3128108       C       T   0.3654   0.0491
+
+
+PS:
+
+Read file <cluster/format_sumstats_.stderr> for stderr output of this job.
+

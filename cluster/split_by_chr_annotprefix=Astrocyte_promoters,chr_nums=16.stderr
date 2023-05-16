@@ -1,0 +1,19 @@
+Building DAG of jobs...
+File path psp_enrichment_results//Astrocyte_promoters.annot contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+File path psp_enrichment_results//annotation_files/Astrocyte_promoters.a.16.annot.gz contains double '/'. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+[Tue May 16 15:10:24 2023]
+rule split_by_chr:
+    input: psp_enrichment_results//Astrocyte_promoters.annot
+    output: psp_enrichment_results//annotation_files/Astrocyte_promoters.a.16.annot.gz
+    jobid: 0
+    wildcards: annotprefix=Astrocyte_promoters, chr_nums=16
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/tmp
+
+[Tue May 16 15:10:36 2023]
+Finished job 0.
+1 of 1 steps (100%) done

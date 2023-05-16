@@ -1,0 +1,61 @@
+Sender: LSF System <lsfadmin@lc05e14>
+Subject: Job 89817685: <ldsc:split_by_chr:annotprefix=Oligo_promoters,chr_nums=14> in cluster <chimera> Done
+
+Job <ldsc:split_by_chr:annotprefix=Oligo_promoters,chr_nums=14> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:10:15 2023
+Job was executed on host(s) <4*lc05e14>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:10:20 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:10:20 2023
+Terminated at Tue May 16 15:10:40 2023
+Results reported at Tue May 16 15:10:40 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "split_by_chr", "local": false, "input": ["psp_enrichment_results//Oligo_promoters.annot"], "output": ["psp_enrichment_results//annotation_files/Oligo_promoters.a.14.annot.gz"], "wildcards": {"annotprefix": "Oligo_promoters", "chr_nums": "14"}, "params": {"outfolder": ["psp_enrichment_results/"]}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 88, "cluster": {"queue": "premium", "cores": 4, "mem": 3750, "time": "120", "name": "$(basename $(pwd)):split_by_chr:annotprefix=Oligo_promoters,chr_nums=14", "output": "logs/split_by_chr:annotprefix=Oligo_promoters,chr_nums=14.stdout", "error": "logs/split_by_chr:annotprefix=Oligo_promoters,chr_nums=14.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake psp_enrichment_results//annotation_files/Oligo_promoters.a.14.annot.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'psp_enrichment_results//Oligo_promoters.annot' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules split_by_chr --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   17.25 sec.
+    Max Memory :                                 1655 MB
+    Average Memory :                             682.92 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               13345.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   21 sec.
+    Turnaround time :                            25 sec.
+
+The output (if any) follows:
+
+Namespace(annotation='psp_enrichment_results//Oligo_promoters.annot', output='psp_enrichment_results//annotation_files/Oligo_promoters', chrom='14')
+14
+         CHR        BP          SNP   CM  base  ANNOT
+2630087   14  19000059  rs201622908  0.0     1      0
+2630088   14  19000115  rs569534039  0.0     1      0
+2630089   14  19000152  rs567484204  0.0     1      0
+2630090   14  19000224  rs201311189  0.0     1      0
+2630091   14  19000368  rs374384267  0.0     1      0
+
+
+PS:
+
+Read file <cluster/split_by_chr_annotprefix=Oligo_promoters,chr_nums=14.stderr> for stderr output of this job.
+

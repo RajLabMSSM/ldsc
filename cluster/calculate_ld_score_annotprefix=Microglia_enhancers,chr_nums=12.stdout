@@ -1,0 +1,118 @@
+Sender: LSF System <lsfadmin@lc05e15>
+Subject: Job 89817788: <ldsc:calculate_ld_score:annotprefix=Microglia_enhancers,chr_nums=12> in cluster <chimera> Done
+
+Job <ldsc:calculate_ld_score:annotprefix=Microglia_enhancers,chr_nums=12> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:10:44 2023
+Job was executed on host(s) <4*lc05e15>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:10:49 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:10:49 2023
+Terminated at Tue May 16 15:14:07 2023
+Results reported at Tue May 16 15:14:07 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "calculate_ld_score", "local": false, "input": ["psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.annot.gz"], "output": ["psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.ldscore.gz", "psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.M", "psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.M_5_50"], "wildcards": {"annotprefix": "Microglia_enhancers", "chr_nums": "12"}, "params": {"chr_nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22], "outfolder": ["psp_enrichment_results/"]}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 354, "cluster": {"queue": "premium", "cores": 4, "mem": 10000, "time": "300", "name": "$(basename $(pwd)):calculate_ld_score:annotprefix=Microglia_enhancers,chr_nums=12", "output": "logs/calculate_ld_score:annotprefix=Microglia_enhancers,chr_nums=12.stdout", "error": "logs/calculate_ld_score:annotprefix=Microglia_enhancers,chr_nums=12.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.ldscore.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.annot.gz' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules calculate_ld_score --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   179.95 sec.
+    Max Memory :                                 547 MB
+    Average Memory :                             424.82 MB
+    Total Requested Memory :                     40000.00 MB
+    Delta Memory :                               39453.00 MB
+    Max Swap :                                   -
+    Max Processes :                              8
+    Max Threads :                                13
+    Run time :                                   198 sec.
+    Turnaround time :                            203 sec.
+
+The output (if any) follows:
+
+psp_enrichment_results//annotation_files/Microglia_enhancers.a.12
+psp_enrichment_results//annotation_files/Microglia_enhancers.a.12
+*********************************************************************
+* LD Score Regression (LDSC)
+* Version 1.0.0
+* (C) 2014-2015 Brendan Bulik-Sullivan and Hilary Finucane
+* Broad Institute of MIT and Harvard / MIT Department of Mathematics
+* GNU General Public License v3
+*********************************************************************
+Call: 
+./ldsc.py \
+--ld-wind-cm 1.0 \
+--out psp_enrichment_results//annotation_files/Microglia_enhancers.a.12 \
+--bfile /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_plink/1000G.EUR.QC.12 \
+--annot psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.annot.gz \
+--l2  
+
+Beginning analysis at Tue May 16 15:11:08 2023
+Read list of 480110 SNPs from /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_plink/1000G.EUR.QC.12.bim
+Read 2 annotations for 480110 SNPs from psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.annot.gz
+Read list of 489 individuals from /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_plink/1000G.EUR.QC.12.fam
+Reading genotypes from /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_plink/1000G.EUR.QC.12.bed
+After filtering, 480110 SNPs remain
+Estimating LD Score.
+Writing LD Scores for 480110 SNPs to psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.ldscore.gz
+
+Summary of LD Scores in psp_enrichment_results//annotation_files/Microglia_enhancers.a.12.l2.ldscore.gz
+         MAF     baseL2  ANNOTL2
+mean  0.1479   133.0252   1.8472
+std   0.1493   252.2069   5.1484
+min   0.0051   -14.3940  -0.6620
+25%   0.0184    31.1472   0.0144
+50%   0.0859    72.1346   0.2173
+75%   0.2566   147.9570   1.3078
+max   0.5000  2913.3788  76.9763
+
+MAF/LD Score Correlation Matrix
+            MAF  baseL2  ANNOTL2
+MAF      1.0000  0.2278   0.0675
+baseL2   0.2278  1.0000   0.1076
+ANNOTL2  0.0675  0.1076   1.0000
+
+LD Score Matrix Condition Number
+53.8001
+
+Annotation Correlation Matrix
+       base  ANNOT
+base    NaN    NaN
+ANNOT   NaN    1.0
+
+Annotation Matrix Column Sums
+base     480110
+ANNOT     11036
+
+Summary of Annotation Matrix Row Sums
+count    480110.0000
+mean          1.0230
+std           0.1499
+min           1.0000
+25%           1.0000
+50%           1.0000
+75%           1.0000
+max           2.0000
+Analysis finished at Tue May 16 15:14:04 2023
+Total time elapsed: 2.0m:55.96s
+
+
+PS:
+
+Read file <cluster/calculate_ld_score_annotprefix=Microglia_enhancers,chr_nums=12.stderr> for stderr output of this job.
+

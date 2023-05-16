@@ -4,7 +4,7 @@ Provided cores: 4
 Rules claiming more threads will be scaled down.
 Select jobs to execute...
 
-[Wed Mar  8 12:45:54 2023]
+[Tue May 16 15:22:02 2023]
 rule run_ldsc:
     input: munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz
     output: results/Farrell_PSP.cell_type_results.txt
@@ -24,8 +24,8 @@ Traceback (most recent call last):
     s, compression = which_compression(first_fh)
   File "/hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldscore/parse.py", line 43, in which_compression
     raise IOError('Could not open {F}[./gz/bz2]'.format(F=fh))
-IOError: Could not open hg19_caQTL_lead_SNPshg19_caQTL_lead_SNPs.bed.a.1.l2.ldscore[./gz/bz2]
-[Wed Mar  8 12:46:22 2023]
+IOError: Could not open Microglia_promotersMicroglia_promoters.bed.a.1.l2.ldscore[./gz/bz2]
+[Tue May 16 15:22:37 2023]
 Error in rule run_ldsc:
     jobid: 0
     output: results/Farrell_PSP.cell_type_results.txt

@@ -1,0 +1,61 @@
+Sender: LSF System <lsfadmin@lc05e19>
+Subject: Job 89817655: <ldsc:split_by_chr:annotprefix=Astrocyte_enhancers,chr_nums=19> in cluster <chimera> Done
+
+Job <ldsc:split_by_chr:annotprefix=Astrocyte_enhancers,chr_nums=19> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:10:11 2023
+Job was executed on host(s) <4*lc05e19>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:10:15 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:10:15 2023
+Terminated at Tue May 16 15:10:32 2023
+Results reported at Tue May 16 15:10:32 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "split_by_chr", "local": false, "input": ["psp_enrichment_results//Astrocyte_enhancers.annot"], "output": ["psp_enrichment_results//annotation_files/Astrocyte_enhancers.a.19.annot.gz"], "wildcards": {"annotprefix": "Astrocyte_enhancers", "chr_nums": "19"}, "params": {"outfolder": ["psp_enrichment_results/"]}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 70, "cluster": {"queue": "premium", "cores": 4, "mem": 3750, "time": "120", "name": "$(basename $(pwd)):split_by_chr:annotprefix=Astrocyte_enhancers,chr_nums=19", "output": "logs/split_by_chr:annotprefix=Astrocyte_enhancers,chr_nums=19.stdout", "error": "logs/split_by_chr:annotprefix=Astrocyte_enhancers,chr_nums=19.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake psp_enrichment_results//annotation_files/Astrocyte_enhancers.a.19.annot.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'psp_enrichment_results//Astrocyte_enhancers.annot' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules split_by_chr --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   13.99 sec.
+    Max Memory :                                 1389 MB
+    Average Memory :                             805.60 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               13611.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   16 sec.
+    Turnaround time :                            21 sec.
+
+The output (if any) follows:
+
+Namespace(annotation='psp_enrichment_results//Astrocyte_enhancers.annot', output='psp_enrichment_results//annotation_files/Astrocyte_enhancers', chrom='19')
+19
+         CHR      BP          SNP        CM  base  ANNOT
+4113145   19   69984  rs372156287 -0.040738     1      0
+4113146   19   91106    rs2531248 -0.036061     1      0
+4113147   19   93279  rs533383196 -0.035580     1      0
+4113148   19   93542  rs143501051 -0.035521     1      0
+4113149   19  106133  rs542947521 -0.032733     1      0
+
+
+PS:
+
+Read file <cluster/split_by_chr_annotprefix=Astrocyte_enhancers,chr_nums=19.stderr> for stderr output of this job.
+

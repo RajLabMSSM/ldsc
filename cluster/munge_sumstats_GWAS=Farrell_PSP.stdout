@@ -1,0 +1,105 @@
+Sender: LSF System <lsfadmin@lc03e12>
+Subject: Job 89818669: <ldsc:munge_sumstats:GWAS=Farrell_PSP> in cluster <chimera> Done
+
+Job <ldsc:munge_sumstats:GWAS=Farrell_PSP> was submitted from host <lc03e30> by user <ravia04> in cluster <chimera> at Tue May 16 15:19:37 2023
+Job was executed on host(s) <4*lc03e12>, in queue <premium>, as user <ravia04> in cluster <chimera> at Tue May 16 15:19:40 2023
+</hpc/users/ravia04> was used as the home directory.
+</sc/arion/projects/ad-omics/ashvin/pipelines/ldsc> was used as the working directory.
+Started at Tue May 16 15:19:40 2023
+Terminated at Tue May 16 15:20:24 2023
+Results reported at Tue May 16 15:20:24 2023
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh
+# properties = {"type": "single", "rule": "munge_sumstats", "local": false, "input": ["formatted_ldsc_gwas/Farrell_PSP.sumstats.gz"], "output": ["munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz"], "wildcards": {"GWAS": "Farrell_PSP"}, "params": {}, "log": [], "threads": 1, "resources": {"tmpdir": "/tmp"}, "jobid": 2, "cluster": {"queue": "premium", "cores": 4, "mem": 3750, "time": "120", "name": "$(basename $(pwd)):munge_sumstats:GWAS=Farrell_PSP", "output": "logs/munge_sumstats:GWAS=Farrell_PSP.stdout", "error": "logs/munge_sumstats:GWAS=Farrell_PSP.stderr", "himem": ""}}
+ cd /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc && \
+/sc/arion/projects/ad-omics/conda/envs/snakemake/bin/python3.1 \
+-m snakemake munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz --snakefile /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/Snakefile \
+--force --cores all --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files '/sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/.snakemake/tmp.nblzxt6t' 'formatted_ldsc_gwas/Farrell_PSP.sumstats.gz' --latency-wait 30 \
+ --attempt 1 --force-use-threads --scheduler ilp \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+ --configfiles /sc/arion/projects/ad-omics/ashvin/pipelines/ldsc/config.yaml --config mode=Null  --allowed-rules munge_sumstats --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /sc/arion/projects/ad-omics/conda/envs/snakemake/bin \
+--mode 2  --use-conda  --conda-frontend mamba  --conda-base-path /hpc/packages/minerva-common/anaconda3/5.0.1  --default-resources "tmpdir=system_tmpdir" 
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   37.24 sec.
+    Max Memory :                                 1048 MB
+    Average Memory :                             698.73 MB
+    Total Requested Memory :                     15000.00 MB
+    Delta Memory :                               13952.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                11
+    Run time :                                   44 sec.
+    Turnaround time :                            47 sec.
+
+The output (if any) follows:
+
+*********************************************************************
+* LD Score Regression (LDSC)
+* Version 1.0.0
+* (C) 2014-2015 Brendan Bulik-Sullivan and Hilary Finucane
+* Broad Institute of MIT and Harvard / MIT Department of Mathematics
+* GNU General Public License v3
+*********************************************************************
+Call: 
+./munge_sumstats.py \
+--signed-sumstats Z_score,0 \
+--out munged_ldsc_gwas/Farrell_PSP_munged \
+--merge-alleles w_hm3.snplist \
+--N 8777.0 \
+--a1 Allele1 \
+--a2 Allele2 \
+--snp ID \
+--sumstats formatted_ldsc_gwas/Farrell_PSP.sumstats.gz \
+--p P.value 
+
+Interpreting column names as follows:
+Allele2:	Allele 2, interpreted as non-ref allele for signed sumstat.
+Z_score:	Directional summary statistic as specified by --signed-sumstats.
+Allele1:	Allele 1, interpreted as ref allele for signed sumstat.
+ID:	Variant ID (e.g., rs number)
+P.value:	p-Value
+
+Reading list of SNPs for allele merge from w_hm3.snplist
+Read 1217311 SNPs for allele merge.
+Reading sumstats from formatted_ldsc_gwas/Farrell_PSP.sumstats.gz into memory 5000000 SNPs at a time.
+.. done
+Read 7230419 SNPs from --sumstats file.
+Removed 6052804 SNPs not in --merge-alleles.
+Removed 24 SNPs with missing values.
+Removed 0 SNPs with INFO <= 0.9.
+Removed 0 SNPs with MAF <= 0.01.
+Removed 0 SNPs with out-of-bounds p-values.
+Removed 214 variants that were not SNPs or were strand-ambiguous.
+1177377 SNPs remain.
+Removed 287 SNPs with duplicated rs numbers (1177090 SNPs remain).
+Using N = 8777.0
+Median value of SIGNED_SUMSTATS was 0.0014, which seems sensible.
+Removed 160 SNPs whose alleles did not match --merge-alleles (1176930 SNPs remain).
+Writing summary statistics for 1217311 SNPs (1176930 with nonmissing beta) to munged_ldsc_gwas/Farrell_PSP_munged.sumstats.gz.
+
+Metadata:
+Mean chi^2 = 1.101
+Lambda GC = 1.084
+Max chi^2 = 489.612
+132 Genome-wide significant SNPs (some may have been removed by filtering).
+
+Conversion finished at Tue May 16 15:20:24 2023
+Total time elapsed: 34.01s
+
+
+PS:
+
+Read file <cluster/munge_sumstats_GWAS=Farrell_PSP.stderr> for stderr output of this job.
+

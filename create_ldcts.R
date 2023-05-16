@@ -7,7 +7,7 @@ create_ldcts_file <- function(bed_file_list, input_directory) {
    bed_file_list <- str_split(bed_file_list, "\\,", simplify=T)[,]
    #print(bed_file_list)
    data <- data.frame(bed_file_list)
-   data$path <- c(paste(input_directory, bed_file_list, '.bed.a.', sep = ''))
+   data$path <- c(paste(input_directory, bed_file_list, '.a.', sep = ''))
    return(data)
 }
 
