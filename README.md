@@ -9,11 +9,12 @@ This pipeline will create a binary annotation + LD score files given a bed file 
 To Run: 
 
 1. First edit the config.yaml file as necessary. The configurations are as follows: 
-    - 'GWAS': GWAS summary statistics name (the pipeline uses the QTL-GWAS excel spreadsheet name column for this, ex. Farrell_PSP)
+    - 'GWAS': GWAS summary statistics name (the pipeline uses the QTL-GWAS excel spreadsheet name column for this, ex. Farrell_PSP) - **NOTE** your GWAS has to be in hg19, pipeline will not liftover the summary statistics
+    - 'annotation_build': annotation build for your annotations (either hg19 or hg38) - if hg38, pipeline will liftover annotations
     - 'inFolder': Folder containing all of the bed files you are interested in using 
     - 'prefix': Prefix of your bed file (ex. for file "Microglia_promoters.bed", your prefix would be "Microglia_promoters")
     - 'gwas_inputfile': name for your file that contains paths to all of the LDSC annotations the pipeline will create. Needs to have ".ldcts" as the suffix (ex. if you are using Nott et al. annotations, then you can name your file "Nott.ldcts"
-    - 'outfolder': outfolder for all of your results 
+    - 'outFolder': outfolder for all of your results (do not add slash after outfolder name)
 
 2. Activate your snakemake conda environment. 
 
