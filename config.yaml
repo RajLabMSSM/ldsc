@@ -1,6 +1,7 @@
 GWAS:
-  #- Kunkle_2019
-  - Nalls_2019
+  - Kunkle_2019
+  - Nalls23andMe_2019
+  - Bellenguez_2021_hg19
 annotation_build:
   - "hg19"
 inFolder: 

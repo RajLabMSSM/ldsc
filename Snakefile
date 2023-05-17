@@ -11,9 +11,8 @@ outFolder = config["outFolder"]
 # revised_bed_file = ["revised_" + b for b in bed_file]
 
 ldcts_prefix = config["gwas_inputfile"]
-gwas_df = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2)
+gwas_df = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2).set_index("dataset")
 genomeBuild = config['annotation_build']
-GWAS_sample_size = [gwas_df.N[gwas_df['dataset'] == g].values[0] for g in gwas]
 category = ''.join(ldcts_prefix).split('.')[0]
 
 # ruleorder: create_annotation > split_by_chr > calculate_ld_score > modify_cts_annotations > new_ldcts_file > format_sumstats > munge_sumstats
@@ -143,16 +142,18 @@ rule munge_sumstats:
       expand("{{outfolder}}/formatted_ldsc_gwas/{{GWAS}}.sumstats.gz", outfolder=outFolder, GWAS=gwas)
    output:
       expand("{{outfolder}}/munged_ldsc_gwas/{{GWAS}}_munged.sumstats.gz", outfolder=outFolder, GWAS=gwas)
+   params:
+      sample_size = lambda wildcards: gwas_df.loc[wildcards.GWAS]['N'],
    shell:
       "ml ldsc/1.0.0;"
-      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/munge_sumstats.py --sumstats {wildcards.outfolder}/formatted_ldsc_gwas/{wildcards.GWAS}.sumstats.gz --merge-alleles  data/w_hm3.snplist --out {wildcards.outfolder}/munged_ldsc_gwas/{wildcards.GWAS}_munged --N {GWAS_sample_size} --snp ID --a1 Allele1 --a2 Allele2 --p P.value --signed-sumstats Z_score,0"
+      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/munge_sumstats.py --sumstats {wildcards.outfolder}/formatted_ldsc_gwas/{wildcards.GWAS}.sumstats.gz --merge-alleles  data/w_hm3.snplist --out {wildcards.outfolder}/munged_ldsc_gwas/{wildcards.GWAS}_munged --N {params.sample_size} --snp ID --a1 Allele1 --a2 Allele2 --p P.value --signed-sumstats Z_score,0"
 
 rule run_ldsc:
    input:
       expand("{ldctsprefix}", ldctsprefix = ldcts_prefix),
-      expand("{outfolder}/munged_ldsc_gwas/{GWAS}_munged.sumstats.gz", outfolder=outFolder, GWAS=gwas)
+      expand("{outfolder}/munged_ldsc_gwas/{{GWAS}}_munged.sumstats.gz", outfolder=outFolder, GWAS=gwas)
    output:
-      expand("{outfolder}/enrichment_results/{GWAS}.cell_type_results.txt", outfolder=outFolder, GWAS=gwas)
+      expand("{outfolder}/enrichment_results/{{GWAS}}.cell_type_results.txt", outfolder=outFolder, GWAS=gwas)
    shell:
       "ml ldsc/1.0.0;"
-      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts {outFolder}/munged_ldsc_gwas/{gwas}_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out {outFolder}/enrichment_results/{gwas} --ref-ld-chr-cts {ldcts_prefix} --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights."
+      "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts {outFolder}/munged_ldsc_gwas/{wildcards.GWAS}_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out {outFolder}/enrichment_results/{wildcards.GWAS} --ref-ld-chr-cts {ldcts_prefix} --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights."

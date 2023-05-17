@@ -13,5 +13,6 @@ calculate_ld_score:
   cores: 4
   mem: 10000
 run_ldsc:
+  time: '120'
   cores: 4
-  mem: 1000
+  mem: 10000
