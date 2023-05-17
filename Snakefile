@@ -12,7 +12,7 @@ outFolder = config["outfolder"]
 
 ldcts_prefix = config["gwas_inputfile"]
 gwas_df = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2)
-
+genomeBuild = config['annotation_build']
 GWAS_sample_size = [gwas_df.N[gwas_df['dataset'] == g].values[0] for g in gwas]
 
 # ruleorder: create_annotation > split_by_chr > calculate_ld_score > modify_cts_annotations > new_ldcts_file > format_sumstats > munge_sumstats
@@ -25,34 +25,43 @@ rule all:
       # expand("{outfolder}/annotation_files/{annotprefix}.a.{chr_nums}.l2.M_5_50", annotprefix = annot_prefix, chr_nums = chromosome_numbers, outfolder = outFolder)
       # expand("{ldctsprefix}", ldctsprefix = ldcts_prefix)
       # expand("{outfolder}/annotation_files/{annotprefix}.a.{chr_nums}.annot.gz", outfolder = outFolder, annotprefix = annot_prefix, chr_nums = chromosome_numbers)
-      expand("results/{GWAS}.cell_type_results.txt", GWAS=gwas)
+      expand("{outfolder}/enrichment_results/{GWAS}.cell_type_results.txt", outfolder=outFolder, GWAS=gwas)
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.annot.gz.revised.annot.gz", chr_nums = chromosome_numbers, bedfile = bed_file),
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.l2.ldscore.gz.revised.l2.ldscore.gz", chr_nums = chromosome_numbers, bedfile = bed_file),
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.l2.M.revised.l2.M", chr_nums = chromosome_numbers, bedfile = bed_file),
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.l2.M_5_50.revised.l2.M_5_50", chr_nums = chromosome_numbers, bedfile = bed_file) 
 
+rule liftOver_bed:
+   input:
+      expand("{inFolder}/{{annotprefix}}.bed", inFolder = infolder, annotprefix = annot_prefix)
+   output:
+      expand("{outfolder}/input_bed_files/{{annotprefix}}.bed", outfolder = outFolder, annotprefix = annot_prefix)
+   shell:
+      "ml liftover/09-Jul-2019;"
+      "sh scripts/liftover_script.sh {infolder}/{wildcards.annotprefix}.bed {outFolder}/input_bed_files/{wildcards.annotprefix}.bed {genomeBuild}"
+      
+      
 rule create_annotation:
    input: 
-      expand("{inFolder}/{{annotprefix}}.bed", inFolder = infolder, annotprefix = annot_prefix)
+      expand("{outfolder}/input_bed_files/{{annotprefix}}.bed", outfolder = outFolder, annotprefix = annot_prefix)
    output: 
-      expand("{outfolder}/{{annotprefix}}.annot", outfolder = outFolder, annotprefix = annot_prefix)
+      expand("{outfolder}/annotation_files/{{annotprefix}}.annot", outfolder = outFolder, annotprefix = annot_prefix)
    params: 
-      script1="create_annotation.R"
+      script1="scripts/create_annotation.R"
    shell: 
       "ml R/4.0.3;"
       "Rscript {params.script1} -b {input} -o {output};"
 
-
 rule split_by_chr: 
    input: 
-      expand("{outfolder}/{{annotprefix}}.annot", outfolder = outFolder, annotprefix = annot_prefix)
+      expand("{outfolder}/annotation_files/{{annotprefix}}.annot", outfolder = outFolder, annotprefix = annot_prefix)
    output: 
       expand("{outfolder}/annotation_files/{{annotprefix}}.a.{{chr_nums}}.annot.gz", outfolder = outFolder, chr_nums = chromosome_numbers, annotprefix = annot_prefix)
    params:
       outfolder = outFolder
    shell:
       # "mkdir {params.outfolder}/annotation_files;"
-      "python split_by_chr.py --annotation {input} --output {params.outfolder}/annotation_files/{wildcards.annotprefix} --chrom {wildcards.chr_nums}"
+      "python scripts/split_by_chr.py --annotation {input} --output {params.outfolder}/annotation_files/{wildcards.annotprefix} --chrom {wildcards.chr_nums}"
 
 
 rule calculate_ld_score: 
@@ -68,36 +77,7 @@ rule calculate_ld_score:
       outfolder = outFolder
    shell:
       "ml ldsc/1.0.0;"
-      "sh calculate_ld_score.sh {params.outfolder}/annotation_files/{wildcards.annotprefix}.a.{wildcards.chr_nums};"
-      # "sh modify_ld_score.sh {params.outfolder}/annotation_files/{wildcards.annotprefix}.a.{wildcards.chr_nums}"
-
-   # run:
-   #    for f in {params.outfolder}/annotation_files/*.annot.gz; do zcat f | cut -f 1  
-   #    annot_files = glob.glob("{params.outfolder}/annotation_files/*.annot.gz")
-   #    ldscore_files = glob.glob("{params.outfolder}/annotation_files/*.ldscore.gz")
-   #    M_5_50_files = glob.glob("{params.outfolder}/annotation_files/*.l2.M_5_50")
-   #    M_files = glob.glob("{params.outfolder}/annotation_files/*.l2.M")
-   #    for annot_f in annot_files:
-   #       print(annot_f)
-   #       annot_frame = pd.read_csv(annot_f, sep = '\t')
-   #       revised_annot_frame = annot_frame.iloc[:,5]
-   #       revised_annot_frame.to_csv(annot_f + '.revised.annot.gz', compression='gzip', sep='\t', index=None)
-   #    for ldscore_f in ldscore_files:
-   #       print(ldscore_f)
-   #       ldscore_frame = pd.read_csv(ldscore_f, sep = '\t')
-   #       revised_ldscore_frame = ldscore_frame.iloc[:,[0,1,2,4]]
-   #       revised_ldscore_frame.to_csv(ldscore_f + '.revised.l2.ldscore.gz', compression='gzip', sep='\t', index=None)
-   #    for M_5_50 in M_5_50_files:
-   #       print(M_5_50)
-   #       M_5_50_frame = pd.read_csv(M_5_50, sep = '\t')
-   #       revised_M_5_50_frame = M_5_50_frame.iloc[:,1]
-   #       revised_M_5_50_frame.to_csv(M_5_50 + '.revised.l2.M_5_50', sep='\t', index=None)
-   #    for M in M_files:
-   #       print(M)
-   #       M_frame = pd.read_csv(M, sep = '\t')
-   #       revised_M_frame = M_frame.iloc[:,1]
-   #       revised_M_frame.to_csv(M + '.revised.l2.M', sep='\t', index=None)
-
+      "sh scripts/calculate_ld_score.sh {params.outfolder}/annotation_files/{wildcards.annotprefix}.a.{wildcards.chr_nums};"
 rule new_ldcts_file:   
    input:
       expand("{outfolder}/annotation_files/{annotprefix}.a.{chr_nums}.annot.gz", annotprefix = annot_prefix, outfolder = outFolder, chr_nums = chromosome_numbers),
@@ -109,7 +89,7 @@ rule new_ldcts_file:
    params: 
       ldctsprefix = ldcts_prefix,
       outfolder = outFolder,
-      script1 = "create_ldcts.R",
+      script1 = "scripts/create_ldcts.R",
       annotprefix = annot_prefix,
       joined_bar=lambda w, input: ",".join(annot_prefix),  # ', input' was added
    shell:
@@ -169,7 +149,8 @@ rule format_sumstats:
       print(gwas)
       for g in gwas: 
          formatted_gwas = format_gwas(g)
-         formatted_gwas.to_csv(''.join(params.out_folder) + "formatted_ldsc_gwas/" + g + '.sumstats.gz', sep = '\t', index = None)
+	 print("goodbye!")
+         formatted_gwas.to_csv(''.join(params.out_folder) + "/formatted_ldsc_gwas/" + g + '.sumstats.gz', sep = '\t', index = None)
 
 rule munge_sumstats:
    input: 
@@ -184,7 +165,7 @@ rule run_ldsc:
    input:
       expand("{outfolder}/munged_ldsc_gwas/{GWAS}_munged.sumstats.gz", outfolder=outFolder, GWAS=gwas)
    output:
-      expand("results/{GWAS}.cell_type_results.txt", GWAS=gwas)
+      expand("{outfolder}/enrichment_results/{GWAS}.cell_type_results.txt", outfolder=outFolder, GWAS=gwas)
    shell:
       "ml ldsc/1.0.0;"
       "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/ldsc.py --h2-cts {outFolder}/munged_ldsc_gwas/{gwas}_munged.sumstats.gz --ref-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/1000G_EUR_Phase3_baseline/baseline. --out {outFolder}/enrichment_results/{gwas} --ref-ld-chr-cts {ldcts_prefix} --w-ld-chr /sc/arion/projects/ad-omics/ashvin/ldsc_annotations/weights_hm3_no_hla/weights."

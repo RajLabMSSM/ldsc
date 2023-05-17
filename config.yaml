@@ -1,5 +1,7 @@
 GWAS:
   - Farrell_PSP
+annotation_build:
+  - "hg19"
 inFolder: 
   - /sc/arion/projects/ad-omics/ashvin/nott_annotations
 prefix:
@@ -35,5 +37,5 @@ prefix:
 gwas_inputfile:
   - test.ldcts
 outfolder: 
-  - psp_enrichment_results/
+  - psp_enrichment_results
 
