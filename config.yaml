@@ -1,5 +1,6 @@
 GWAS:
-  - Farrell_PSP
+  #- Kunkle_2019
+  - Nalls_2019
 annotation_build:
   - "hg19"
 inFolder: 
@@ -35,7 +36,7 @@ prefix:
   - Neuronal_enhancers
   - Microglia_enhancers 
 gwas_inputfile:
-  - test.ldcts
-outfolder: 
-  - psp_enrichment_results
+  - Nott.ldcts
+outFolder: 
+  - AD_enrichment_results
 

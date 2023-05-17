@@ -58,7 +58,7 @@ for (i in opt$bed) {
    output <- opt$out
    print(output)
    annotation_file <- create_annotation(bed_file)
-   file_path = paste(output, '.annot', sep = '')
+   file_path = paste("annotation_files/", output, '.annot', sep = '')
    print(file_path)
    write_tsv(annotation_file, output)
 }
