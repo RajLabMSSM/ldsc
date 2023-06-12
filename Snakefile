@@ -117,11 +117,11 @@ rule format_sumstats:
                     new_gwas_dict['full_se'].values[0]]
          
          gwas_shortened = gwas_df[column_names]
-         print(new_gwas_dict['full_effect'].str.contains("OR"))
+         print(new_gwas_dict['full_effect'].str.contains("OR|or"))
 	 print(gwas_shortened.iloc[:,4], gwas_shortened.iloc[:,5])
-         if (new_gwas_dict['full_effect'].str.contains("OR").values[0] == True):
-            gwas_shortened['Z'] = gwas_shortened.iloc[:,4] - 1  
-            # gwas_shortened['Z'] = np.log10(gwas_shortened.iloc[:,4]) / gwas_shortened.iloc[:,5]
+         if (new_gwas_dict['full_effect'].str.contains("OR|or").values[0] == True):
+            # gwas_shortened['Z'] = gwas_shortened.iloc[:,4] - 1  
+            gwas_shortened['Z'] = np.log10(gwas_shortened.iloc[:,4]) / gwas_shortened.iloc[:,5]
          else: 
             gwas_shortened['Z'] = gwas_shortened.iloc[:,4] / gwas_shortened.iloc[:,5]
   
