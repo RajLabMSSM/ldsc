@@ -15,6 +15,8 @@ To Run:
     - 'prefix': Prefix of your bed file (ex. for file "Microglia_promoters.bed", your prefix would be "Microglia_promoters")
     - 'gwas_inputfile': name for your file that contains paths to all of the LDSC annotations the pipeline will create. Needs to have ".ldcts" as the suffix (ex. if you are using Nott et al. annotations, then you can name your file "Nott.ldcts"
     - 'outFolder': outfolder for all of your results (do not add slash after outfolder name)
+    - annot_ext: the file extension of the annotation files
+    - 'flank': how many bp to extend annotations by
 
 2. Activate your snakemake conda environment. 
 
