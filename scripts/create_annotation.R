@@ -23,17 +23,28 @@ suppressPackageStartupMessages(library(optparse))
 
 thousand_genome_annotations = read_tsv('/sc/arion/projects/ad-omics/ashvin/ldsc_original/1000G_Phase3_annotation_full.tsv.gz')
 
-create_annotation <- function(data_file) {
+# take all 1000Gp3 SNPs
+# add a column called ANNOT
+# if SNP overlaps a region in the BED file then you report that as 1, otherwise it's 0
+# adding flanking parameter to increase size of intervals
+create_annotation <- function(data_file, flank_n) {
   print("decoy")
   bed_file = data_file
   df = thousand_genome_annotations
   colnames(bed_file) = c('chrom', 'start', 'end', 'category')
+  if(flank_n != 0){
+     message(" * flanking by ", flank_n)
+     bed_file$start <- bed_file$start - flank_n
+     bed_file$end <- bed_file$end + flank_n
+  }
   cat = bed_file$category[1]
   print(head(cat))
   overlap = bed_intersect(df, bed_file)
   type_of_annotation = as.character(bed_file$category[1]) 
   df$temp <- 0 
   df$temp[thousand_genome_annotations$SNP %in% overlap$SNP.x] <- 1
+  
+  # remove "chr" from chromsome name and convert to ineger
   df$chrom = substr(df$chrom, 4,nchar(df$chrom))
   df$chrom = as.integer(df$chrom)
   df$start = as.integer(df$start)
@@ -45,19 +56,21 @@ create_annotation <- function(data_file) {
 
 option_list <- list(
    make_option(c('-b', '--bed'), help='list of bed files'),
-   make_option(c('-o', '--out'), help='list of output files')
+   make_option(c('-o', '--out'), help='list of output files'),
+   make_option(c('-f', '--flank'), help='whether to flank interval coordinates by a fixed amount', default = 0)
 )
 
 option.parser <- OptionParser(option_list=option_list)
 opt <- parse_args(option.parser)
 print(opt)
 
+# why does this loop through multiple bed files?
 for (i in opt$bed) {
    bed_file_path <- i
    bed_file <- read.table(bed_file_path)
    output <- opt$out
    print(output)
-   annotation_file <- create_annotation(bed_file)
+   annotation_file <- create_annotation(bed_file, opt$flank)
    file_path = paste("annotation_files/", output, '.annot', sep = '')
    print(file_path)
    write_tsv(annotation_file, output)

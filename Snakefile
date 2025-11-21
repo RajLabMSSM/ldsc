@@ -4,16 +4,38 @@ import glob
 import pandas as pd 
 
 gwas = config["GWAS"]
+
+# this has to be fixed - ldsc requires 22 chroms
 chromosome_numbers = list(range(1, 23))
+
+# where the bed files are kept
 infolder = config["inFolder"]
+
+# list of file names
 annot_prefix = config["prefix"]
+
+#where to output the results
 outFolder = config["outFolder"]
 # revised_bed_file = ["revised_" + b for b in bed_file]
 
+# flanking intervals
+flank = config["flank"]
+
+# file extension either .bed or .bed.gz
+annot_ext = ".bed.gz"
+annot_ext = config["annot_ext"]
+
 ldcts_prefix = config["gwas_inputfile"]
-gwas_df = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2).set_index("dataset")
+gwas_df = pd.read_csv("/sc/arion/projects/ad-omics/data/references/GWAS/GWAS-QTL_data_dictionary_GWAS.csv").set_index("dataset")
+#gwas_df = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2).set_index("dataset")
 genomeBuild = config['annotation_build']
 category = ''.join(ldcts_prefix).split('.')[0]
+
+# gwas_inputfile in config is the name of the file that contains lists of the different features
+
+# currently config insists that each feature must be listed by name rather than as an external list of feature BEDs
+
+
 
 # ruleorder: create_annotation > split_by_chr > calculate_ld_score > modify_cts_annotations > new_ldcts_file > format_sumstats > munge_sumstats
 
@@ -31,30 +53,38 @@ rule all:
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.l2.M.revised.l2.M", chr_nums = chromosome_numbers, bedfile = bed_file),
       # expand("bed_files/annotation_files/{bedfile}.a.{chr_nums}.l2.M_5_50.revised.l2.M_5_50", chr_nums = chromosome_numbers, bedfile = bed_file) 
 
+
+# can this handle gzipped BED files? 
+# currently writes out annot files to the current working directory rather than the outFolder
 rule liftOver_bed:
    input:
-      expand("{inFolder}/{{annotprefix}}.bed", inFolder = infolder, annotprefix = annot_prefix)
+      expand("{inFolder}/{{annotprefix}}{ext}", inFolder = infolder, annotprefix = annot_prefix, ext = annot_ext)
    output:
-      expand("annotation_database/{c}/input_bed_files/{{annotprefix}}.bed", c = category, annotprefix = annot_prefix)
+      expand("annotation_database/{c}/input_bed_files/{{annotprefix}}{ext}", c = category, annotprefix = annot_prefix, ext = annot_ext)
    shell:
       "ml liftover/09-Jul-2019;"
-      "sh scripts/liftover_script.sh {infolder}/{wildcards.annotprefix}.bed annotation_database/{category}/input_bed_files/{wildcards.annotprefix}.bed {genomeBuild}"
-      
-      
+      "sh scripts/liftover_script.sh {infolder}/{wildcards.annotprefix}{annot_ext} annotation_database/{category}/input_bed_files/{wildcards.annotprefix}{annot_ext} {genomeBuild}"
+
+# requires valr package to be installed on local R      
+# here - can we add flanking of ranges?
+# output isn't zipped so is huge for some reason      
 rule create_annotation:
    input: 
-      expand("annotation_database/{c}/input_bed_files/{{annotprefix}}.bed", c = category, annotprefix = annot_prefix)
+      expand("annotation_database/{c}/input_bed_files/{{annotprefix}}{ext}", c = category, annotprefix = annot_prefix, ext = annot_ext)
    output: 
-      expand("annotation_database/{c}/annotation_files/{{annotprefix}}.annot", c = category, annotprefix = annot_prefix)
+      expand("annotation_database/{c}/annotation_files/{{annotprefix}}.annot.gz", c = category, annotprefix = annot_prefix)
    params: 
       script1="scripts/create_annotation.R"
    shell: 
-      "ml R/4.0.3;"
-      "Rscript {params.script1} -b {input} -o {output};"
+      "ml R;"
+      "Rscript {params.script1} -b {input} -o {output} --flank {flank};"
 
+# now the annotations get split
+# appears to be run over and over rather than just producing 22 output files from one run
+# why is this a separate script? couldn't this be done in the create_annotation step?
 rule split_by_chr: 
    input: 
-      expand("annotation_database/{c}/annotation_files/{{annotprefix}}.annot", c = category, annotprefix = annot_prefix)
+      expand("annotation_database/{c}/annotation_files/{{annotprefix}}.annot.gz", c = category, annotprefix = annot_prefix)
    output: 
       expand("annotation_database/{c}/annotation_files/{{annotprefix}}.a.{{chr_nums}}.annot.gz", c = category, chr_nums = chromosome_numbers, annotprefix = annot_prefix)
    params:
@@ -62,7 +92,7 @@ rule split_by_chr:
    shell:
       "python scripts/split_by_chr.py --annotation {input} --output annotation_database/{params.c}/annotation_files/{wildcards.annotprefix} --chrom {wildcards.chr_nums}"
 
-
+# looks like LD score gets calculated per chromosome
 rule calculate_ld_score: 
    input:
       expand("annotation_database/{c}/annotation_files/{{annotprefix}}.a.{{chr_nums}}.annot.gz", c = category, chr_nums = chromosome_numbers, annotprefix = annot_prefix)
@@ -77,6 +107,7 @@ rule calculate_ld_score:
       "ml ldsc/1.0.0;"
       "sh scripts/calculate_ld_score.sh annotation_database/{params.c}/annotation_files/{wildcards.annotprefix}.a.{wildcards.chr_nums};"
 
+# does this run per chrom or all together?
 rule new_ldcts_file:   
    input:
       expand("annotation_database/{c}/annotation_files/{annotprefix}.a.{chr_nums}.annot.gz", c = category, chr_nums = chromosome_numbers, annotprefix = annot_prefix),
@@ -97,6 +128,8 @@ rule new_ldcts_file:
       "ml R/4.0.3;"
       "Rscript {params.script1} -i annotation_database/{params.c}/annotation_files/ -b {params.joined_bar} -o {params.ldctsprefix};"
 
+# this should only have to run once per GWAS
+# why is this not just a separate python script?
 rule format_sumstats: 
    output:
       expand("{outfolder}/formatted_ldsc_gwas/{GWAS}.sumstats.gz", outfolder = outFolder, GWAS=gwas)
@@ -104,7 +137,8 @@ rule format_sumstats:
       out_folder = outFolder
    run:
       import numpy as np
-      gwas_dict = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2)
+      #gwas_dict = pd.read_excel("/sc/arion/projects/ad-omics/data/references//GWAS/GWAS-QTL_data_dictionary.xlsx", sheet_name = 2)
+      gwas_dict = pd.read_csv("/sc/arion/projects/ad-omics/data/references/GWAS/GWAS-QTL_data_dictionary_GWAS.csv")
       def format_gwas(gwas_d): 
          new_gwas_dict = gwas_dict.loc[gwas_dict['dataset'] == gwas_d]
          print(new_gwas_dict['full_processed_path'].values[0])
@@ -148,6 +182,7 @@ rule munge_sumstats:
       "ml ldsc/1.0.0;"
       "python /hpc/packages/minerva-common/ldsc/1.0.0/ldsc/munge_sumstats.py --sumstats {wildcards.outfolder}/formatted_ldsc_gwas/{wildcards.GWAS}.sumstats.gz --merge-alleles  data/w_hm3.snplist --out {wildcards.outfolder}/munged_ldsc_gwas/{wildcards.GWAS}_munged --N {params.sample_size} --snp ID --a1 Allele1 --a2 Allele2 --p P.value --signed-sumstats Z_score,0"
 
+# this is run once per GWAS / annotation pair, right?
 rule run_ldsc:
    input:
       expand("{ldctsprefix}", ldctsprefix = ldcts_prefix),
