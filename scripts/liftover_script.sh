@@ -14,7 +14,7 @@ then
    cp $input_bed $output_bed
 elif [[ "$genome_build" == "hg38" ]]
 then
-   liftOver $input_bed data/hg38ToHg19.over.chain.gz $output_bed ${output_bed}_unMapped
+   liftOver -bedPlus=4 $input_bed data/hg38ToHg19.over.chain.gz $output_bed ${output_bed}_unMapped
    rm ${output_bed}_unMapped
    echo hello!
 else 

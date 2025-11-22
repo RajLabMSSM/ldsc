@@ -31,7 +31,7 @@ create_annotation <- function(data_file, flank_n) {
   print("decoy")
   bed_file = data_file
   df = thousand_genome_annotations
-  colnames(bed_file) = c('chrom', 'start', 'end', 'category')
+  colnames(bed_file)[1:4] = c('chrom', 'start', 'end', 'category')
   if(flank_n != 0){
      message(" * flanking by ", flank_n)
      bed_file$start <- bed_file$start - flank_n
